@@ -9,6 +9,8 @@ import time
 # カメラデバイス番号（0 = デフォルトのカメラ）
 # 特定のデバイスを使う場合: vdo="/dev/video2"
 vdo = 0
+wait_key_ms = 30
+exit_key = 27  # ESC
 
 # V4L2 バックエンドでカメラをオープン
 cap = cv2.VideoCapture(vdo, cv2.CAP_V4L2)
@@ -30,9 +32,9 @@ try:
         # 取得したフレームをウィンドウに表示
         cv2.imshow('frame2', frame2)
 
-        # 30ms 待機し、キー入力を取得（ESC = 27 で終了）
-        k = cv2.waitKey(30) & 0xff
-        if k == 27:
+        # wait_key_ms 待機し、キー入力を取得（exit_key で終了）
+        k = cv2.waitKey(wait_key_ms) & 0xff
+        if k == exit_key:
             break
 finally:
     # カメラとウィンドウを解放（エラー時・中断時も必ず実行）
